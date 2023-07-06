@@ -1,0 +1,48 @@
+%Problema de Busqueda No Informada
+%Juego de las ranas son 3 ranas negras y 3 ranas marrones
+%cada rana se asigna un valor, a las ranas negras 1,2,3 y a
+%las marrones 5,6,7 respectivamente y al espacio disponible 4
+
+sol(A):- siguiente(e(1,2,3,4,5,6,7),[e(1,2,3,4,5,6,7)],_,[], A).
+
+%Verifica si es estado final
+siguiente(e(5,6,7,4,1,2,3),V,V,A,A):- !.
+%Busca el siguiente estado
+siguiente(e(E,F,G,H,I,J,K),Lv,V,La,A):-
+    accion(e(E,F,G,H,I,J,K),e(Es,Fs,Gs,Hs,Is,Js,Ks),Acc),
+    not(pertenece(e(Es,Fs,Gs,Hs,Is,Js,Ks),Lv)),
+    siguiente(e(Es,Fs,Gs,Hs,Is,Js,Ks),[e(Es,Fs,Gs,Hs,Is,Js,Ks)|Lv],V,[Acc|La],A).
+
+pertenece(X,[X|_]).
+pertenece(X,[_|Q]):- pertenece(X,Q).
+
+%1) 3 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,H,G,I,J,K), 'a'):- H =:= 4, G =:= 3.
+%2) 5 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,I,H,G,J,K), 'b'):- G =:= 4, I =:= 5.
+%3) 6 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,H,J,I,K), 'c'):- I =:= 4, J =:= 6.
+%4) 3 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,J,I,H,K), 'd'):- J =:= 4, H =:= 3.
+%5) 2 en 4
+accion(e(E,F,G,H,I,J,K), e(E,H,G,F,I,J,K), 'e'):- H =:= 4, F =:= 2.
+%6) 1 en 4
+accion(e(E,F,G,H,I,J,K), e(F,E,G,H,I,J,K), 'f'):- F =:= 4, E =:= 1.
+%7) 5 en 4
+accion(e(E,F,G,H,I,J,K), e(G,F,E,H,I,J,K), 'g'):- E =:= 4, G =:= 5.
+%8) 6 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,I,H,G,J,K), 'h'):- G =:= 4, I =:= 6.
+%9) 7 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,H,K,J,I), 'i'):- I =:= 4, K =:= 7.
+%10) 3 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,H,I,K,J), 'j'):- K =:= 4, J =:= 3.
+%11) 2 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,J,I,H,K), 'k'):- J =:= 4, H =:= 2.
+%12) 1 en 4
+accion(e(E,F,G,H,I,J,K), e(E,H,G,F,I,J,K), 'l'):- H =:= 4, F =:= 1.
+%13) 6 en 4
+accion(e(E,F,G,H,I,J,K), e(E,G,F,H,I,J,K), 'm'):- F =:= 4, G =:= 6.
+%14) 7 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,I,H,G,J,K), 'n'):- G =:= 4, I =:= 7.
+%15) 1 en 4
+accion(e(E,F,G,H,I,J,K), e(E,F,G,I,H,J,K), 'o'):- I =:= 4, H =:= 1.
